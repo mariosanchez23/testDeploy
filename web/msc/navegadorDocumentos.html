@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Navegador Documentos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+  <link href="libs/swiper/css/swiper.min.css" rel="stylesheet">
+  <link href="libs/bootstrap4/css/bootstrap.css" rel="stylesheet">
+  <link href="css/navegadorDocumentos.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+  <div class="container">
+    <div class="row m-1">
+       <button type="button" class="btn btn-outline-info btn-sm" onclick="loadDataFromServer();">
+        Refrescar
+      </button>
+      <button type="button" class="btn btn-outline-info btn-sm" onclick="window.open(document.location,'_blank','status,scrollbars,resizable,location=no');">
+        Ventana
+      </button>
+
+      <div class="col col-md-auto">
+        <ul class="nav nav-pills nav-fill">
+         <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" data-toggle="dropdown" data-pathRelativo="servicio">
+              <img src="img/servicio.png"/> Servicio
+            </a>
+            <div class='dropdown-menu'></div>
+          </li>
+
+        </ul>
+      </div>
+      <div id="uploadFiles" class="uploadFiles dropzone-previews"> </div>
+
+     </div> 
+  </div>
+      
+        <!-- Swiper -->
+  <div class="swiper-container gallery-top">
+    <div class="swiper-wrapper">
+    </div>
+    <!-- Add Arrows -->
+    <div class="swiper-button-next swiper-button-black"></div>
+    <div class="swiper-button-prev swiper-button-black"></div>
+  </div>
+  <div class="swiper-container gallery-thumbs">
+    <div class="swiper-wrapper">
+    </div>
+  </div>
+
+  <script src="libs/jquery-3.1.0.min.js"></script>
+  <script src="libs/popper.js"></script>
+  <script src="libs/bootstrap4/js/bootstrap.min.js"></script>
+  <script src="libs/swiper/js/swiper.min.js"></script>
+  <script src="libs/dropzone/dropzone.js"></script>
+  <script src="js/general.js"></script>
+  <script src="js/navegadorDocumentos.js"></script>
+
+
+</body>
+</html>

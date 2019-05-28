@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Parte de Trabajo</title>
+        <link rel="stylesheet" href="libs/bootstrap/css/bootstrap.min.css" >
+ 	
+    <style type="text/css">
+<!--
+.input-group-addon {
+   min-width: 100px;
+}
+-->
+</style>
+    </head>
+
+    <body>
+    <csp:object name="actividad" classname="CARPINTERIA.Actividades" OBJID=#(%request.Get("actividadId"))#>
+
+<script language="cache" runat="server">
+ 	if $IsObject(actividad.Trabajo.Afectado){
+ 		set direccion=$REPLACE(actividad.Trabajo.Afectado.DatosContacto.Direccion,$c(10),", ")
+ 	}else{
+ 		set direccion=$REPLACE(actividad.Trabajo.Servicio.Asegurado.DatosContacto.Direccion,$c(10),", ")
+ 	}
+ 	set recursos=""
+ 	for i=1:1:actividad.Recursos.Count() {
+ 		set t=##class(CARPINTERIA.Trabajador).%OpenId(actividad.Recursos.GetAt(i))
+ 		if (('(t.Sistema)) && (t.username '="") ) { set recursos=recursos_t.Nombre_"," }
+ 	}
+ 
+ 	set imagenLogo = "../mscarpinteros/img/pixeltrans.gif"
+ 	set foto=actividad.Trabajo.Servicio.ClienteProveedor.EmpresaAsociada.foto
+	if ($ISObject(foto)){	
+		Set imagenLogo ="%25CSP.StreamServer.cls?STREAMOID="_##class(%CSP.Page).Encrypt(foto.%Oid())
+	}	 	
+ 
+</script>
+    
+        <!-- Bootstrap core JavaScript
+    ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <div class="container">
+            <div class="row">
+                    <div class="panel panel-warning"> 
+                        <div class="panel-heading"> 
+                            <h3 class="panel-title text-center text-uppercase">PARTE DE TRABAJO</h3> 
+                        </div>                         
+                        <div class="panel-body">
+                            <div class="col-md-2 col-sm-2 col-xs-2 ">
+                                <img width="100%"  src="#(imagenLogo)#" alt=""> 
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <div class="form-group has-warning">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Expediente</span> 
+                                        <input class="form-control" placeholder="#(actividad.Trabajo.Servicio.NroServicio)#" aria-describedby="basic-addon1">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Inicio</span> 
+                                        <input class="form-control" placeholder="#(actividad.ParteActividad.Inicio)#"> 
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Fin</span> 
+                                        <input class="form-control" placeholder="#(actividad.ParteActividad.Fin)#" > 
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Compañia</span> 
+                                        <input class="form-control" placeholder="#(actividad.Trabajo.Servicio.ClienteProveedor.PadreProveedor.Nombre)#"> 
+                                    </div>                                         
+                                </div>                                     
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-4" data-pg-collapsed> 
+							    <h4 class="text-muted text-center">Para cualquier consulta:&nbsp;</h4> 
+							    <h3 class="text-warning text-center">91 814 19 75</h3> 
+							    <h5 class="text-warning text-center">Horario Atención de 8:00 a 18:00</h5> 
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-6">
+                            <div class="form-group has-warning">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Asegurado</span> 
+                                    <input class="form-control" placeholder="#(actividad.Trabajo.Servicio.Asegurado.Nombre)#" aria-describedby="basic-addon1"> 
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">Dirección</span> 
+                                    <input class="form-control" placeholder="#(direccion)#" aria-describedby="basic-addon1"> 
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">Ciudad</span> 
+                                    <input class="form-control" placeholder="#(actividad.Trabajo.Servicio.Asegurado.DatosContacto.Ciudad)#" aria-describedby="basic-addon1"> 
+                                </div>                                     
+                            </div>                                 
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <div class="form-group has-warning">
+                                <div class="input-group">
+                                    <span class="input-group-addon">Email/Tel.</span> 
+                                    <input class="form-control" placeholder="#(actividad.ParteActividad.EnviarMailA)#" aria-describedby="basic-addon1"> 
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">CIF/NIF</span> 
+                                    <input class="form-control" placeholder="#(actividad.Trabajo.Servicio.Asegurado.NIF)#" aria-describedby="basic-addon1"> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>                     
+                </div>
+            </div>
+            <div class="row">
+                <div class="panel panel-warning">
+                    <div class="panel-heading"> 
+                        <h3 class="panel-title">Descripción de las reparaciones</h3> 
+                    </div>                     
+                    <div class="panel-body" style="padding: 0;">
+                        <div class="form-group" style="margin-bottom: 0;"> 
+                            <textarea class="form-control text-left" rows="5" id="formInput235">#(actividad.ParteActividad.Descripcion)#</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 "> 
+                    <p class="text-muted text-left small">* El cliente queda expresamente informado: La madera al ser un producto natural puede variar en veta,tonalidad,barniz y laca. Es su responsabilidad vaciar armarios, retirar enseres y objetos personales para facilitar los trabajos. Siempre que se realiza una obra se origina polvo ambiental de forma iinevitable. Se precisará una zona de trabajo cercana, facilmente accesible y de su propiedad. Garantía de 6 meses dalbo indicación contraria.</p>
+                    <p class="text-muted text-left small">* Autoriza a iniciar trabajos y encargo de materiales. 
+                    Una vez iniciados no se podrá solicitar indemnización. </p> 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading"> 
+                            <h3 class="panel-title">Firma reparador</h3> 
+                        </div>                         
+                        <div class="panel-body">
+                            <p class="text-warning small">Nombre: #(recursos)#</p>
+                            <p class="text-warning small">&nbsp;&nbsp;</p>
+                            <img width="250px" src="data:image/jpg;base64, #($REPLACE(actividad.ParteActividad.FirmaReparador,$CHAR(32),"+"))#"/>
+                            <p class="text-warning text-center small">Firma</p>
+                        </div>
+                    </div>                     
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading"> 
+                            <h3 class="panel-title">Firma cliente</h3> 
+                        </div>                         
+                        <div class="panel-body">
+                            <p class="text-warning small">Nombre: #(actividad.ParteActividad.ConformidadNombre)#   NIF: #(actividad.ParteActividad.ConformidadDNI)#</p>
+                            <p class="text-warning small">Relación con asegurado: #(actividad.ParteActividad.ConformidadRelacion)#</p>
+                            <img width="250px" src="data:image/jpg;base64, #($REPLACE(actividad.ParteActividad.FirmaCliente,$CHAR(32),"+"))#"/>
+                            <p class="text-warning text-center small">Firma</p>
+                        </div>
+                    </div>                     
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
